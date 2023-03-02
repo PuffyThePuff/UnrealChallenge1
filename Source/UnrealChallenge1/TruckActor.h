@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 #include "TruckActor.generated.h"
 
+class AUnrealChallenge1GameModeBase;
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -18,24 +20,41 @@ public:
 	// Sets default values for this actor's properties
 	ATruckActor();
 
-	void MoveTo(FVector pickUpLocation);
+	void MoveTo(FVector pickUpLocation, FVector deliveryLocation, FString materialToDeliver);
+	bool IsBusy() const;
 
 	//is the truck actor currently doing a delivery?
-	bool isBusy = false;
+	bool isDelivering = false;
+	bool isPickingUp = false;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
 
-	FVector destination;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "References")
+	AUnrealChallenge1GameModeBase* GameModeBase;
+
+	FVector pickUpLoc;
+	FVector deliveryLoc;
 	int cargoNum = 0;
-	std::string cargoName = "none";
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	FString materialName = "";
 };
+
+inline bool ATruckActor::IsBusy() const
+{
+	if (isDelivering || isPickingUp)
+	{
+		UE_LOG(LogTemp, Log, TEXT("truck is busy"));
+		return true;
+	}
+	UE_LOG(LogTemp, Log, TEXT("truck is not busy"));
+	return false;
+}
