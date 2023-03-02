@@ -25,11 +25,11 @@ private:
 
 	std::list<FVector*> deliveryList;
 
-	float woodTimeToMake = 5.0f;
-	float ironTimeToMake = 5.0f;
-	float coalTimeToMake = 5.0f;
-	float steelTimeToMake = 2.5f;
-	float sewingTimeToMake = 10.0f;
+	float woodTimeToMake = 2.0f;
+	float ironTimeToMake = 4.0f;
+	float coalTimeToMake = 4.0f;
+	float steelTimeToMake = 4.0f;
+	float sewingTimeToMake = 5.0f;
 
 	FVector woodLocation = FVector(-400, -20, 0);
 	FVector ironLocation = FVector(50, -300, 0);
@@ -74,6 +74,8 @@ public:
 	int coalCount = 0;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Count")
 	int steelCount = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Count")
+	int sewingMachineCount = 0;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Count")
 	int furnaceMatCountIron = 0;

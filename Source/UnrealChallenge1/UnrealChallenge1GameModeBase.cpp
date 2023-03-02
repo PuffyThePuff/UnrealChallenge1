@@ -14,9 +14,11 @@ void AUnrealChallenge1GameModeBase::BeginPlay()
 
 	FindAllActors(GetWorld(), TruckActors);
 
-	GetWorldTimerManager().SetTimer(this->WoodTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialWood, 5.0f, true, this->woodTimeToMake);
-	GetWorldTimerManager().SetTimer(this->CoalTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialCoal, 5.0f, true, this->coalTimeToMake);
-	GetWorldTimerManager().SetTimer(this->IronTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialIron, 5.0f, true, this->ironTimeToMake);
+	GetWorldTimerManager().SetTimer(this->WoodTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialWood, this->woodTimeToMake, true, this->woodTimeToMake);
+	GetWorldTimerManager().SetTimer(this->CoalTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialCoal, this->coalTimeToMake, true, this->coalTimeToMake);
+	GetWorldTimerManager().SetTimer(this->IronTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialIron, this->ironTimeToMake, true, this->ironTimeToMake);
+	GetWorldTimerManager().SetTimer(this->SteelTimerHandle, this, &AUnrealChallenge1GameModeBase::AddMaterialSteel, this->steelTimeToMake, true, this->steelTimeToMake);
+	GetWorldTimerManager().SetTimer(this->SewingTimerHandle, this, &AUnrealChallenge1GameModeBase::AddSewingMachine, this->sewingTimeToMake, true, this->sewingTimeToMake);
 }
 
 void AUnrealChallenge1GameModeBase::Tick(float DeltaSeconds)
@@ -175,7 +177,7 @@ void AUnrealChallenge1GameModeBase::AddMaterialSteel()
 
 void AUnrealChallenge1GameModeBase::AddSewingMachine()
 {
-	//UE_LOG(LogTemp, Log, TEXT("sewing machine added"));
+	this->sewingMachineCount++;
 }
 
 float AUnrealChallenge1GameModeBase::TimeLeft(FString materialName)
@@ -195,6 +197,10 @@ float AUnrealChallenge1GameModeBase::TimeLeft(FString materialName)
 	if (materialName == "steel")
 	{
 		return GetWorldTimerManager().GetTimerRemaining(SteelTimerHandle) / steelTimeToMake;
+	}
+	if (materialName == "sewingMachine")
+	{
+		return GetWorldTimerManager().GetTimerRemaining(SewingTimerHandle) / sewingTimeToMake;
 	}
 
 	return 0;
