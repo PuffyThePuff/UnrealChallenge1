@@ -6,4 +6,4 @@ By: Jose Miguel D. Bravo
 
 Entry UMap: SupplyChain
 
-Note: Could not complete the delivery logic, trucks act as if they are delivering but materials do not actually get transported
+Simulates Anno 1800 supply chain production and delivery
